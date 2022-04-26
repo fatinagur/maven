@@ -2,15 +2,11 @@
 
 node {
   stage ('Checkout') {
-    checkout scm
+    checkout 'https://github.com/fatinagur/maven.git'
   }
 
-  stage('Check Env Parameters'){
-    echo "Branch Name : ${env.GIT_BRANCH}"
-    echo "Octo Server Address : ${env.octoServer}"
+  stage('Compile-Package'){
+    sh 'mvn package'
   }
-
-  stage('Run Cake') {
-    powershell -File build.ps1 -projectName="Jenkins_PowerShell_Cake_Tutorial" -branchName=${env.GIT_BRANCH} -octoServer=${env.octoServer} -octoApiKey=${env.octoApiKey}
-  }
+  
 }
